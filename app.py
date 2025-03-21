@@ -1,11 +1,15 @@
-from flask import Flask, render_template, request, send_file, jsonify, url_for
 import os
+from flask import Flask, render_template, request, send_file, jsonify, url_for
 from werkzeug.utils import secure_filename
 import fitz  # PyMuPDF
 from PIL import Image
 import zipfile
 
 app = Flask(__name__)
+
+# ------------------------------
+# Basic Config
+# ------------------------------
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'png', 'jpg', 'jpeg'}
@@ -16,14 +20,25 @@ def allowed_file(filename):
 # Ensure the upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+# ------------------------------
+# Routes
+# ------------------------------
 @app.route('/')
-def index():
+def home():
+    """
+    Renders the main index.html template.
+    """
     return render_template('index.html')
 
 @app.route('/favicon.ico')
 def favicon():
+    """
+    Serves your favicon from static folder.
+    """
+    # If you have 'static/favicon.ico':
     return send_file(os.path.join(app.root_path, 'static', 'favicon.ico'))
 
+# ========== PDF / Image Operations ==========
 @app.route('/convert-image', methods=['POST'])
 def convert_image():
     files = request.files.getlist('files[]')
@@ -35,6 +50,7 @@ def convert_image():
     pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], 'output.pdf')
     images[0].save(pdf_path, save_all=True, append_images=images[1:])
     return send_file(pdf_path, as_attachment=True, download_name='converted.pdf')
+
 
 @app.route('/compress-pdf', methods=['POST'])
 def compress_pdf_route():
@@ -58,13 +74,11 @@ def compress_pdf_route():
     for page in doc:
         page.set_compression(compression_int)
 
-    compressed_pdf_path = os.path.join(
-        app.config['UPLOAD_FOLDER'],
-        'compressed_' + secure_filename(file.filename)
-    )
+    compressed_pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], 'compressed_' + secure_filename(file.filename))
     doc.save(compressed_pdf_path)
     doc.close()
     return send_file(compressed_pdf_path, as_attachment=True, download_name='compressed.pdf')
+
 
 @app.route('/convert-pdf-to-image', methods=['POST'])
 def convert_pdf_to_image():
@@ -94,6 +108,7 @@ def convert_pdf_to_image():
     except Exception as e:
         return jsonify({"message": f"Error converting PDF: {str(e)}"}), 500
 
+
 @app.route('/split-pdf', methods=['POST'])
 def split_pdf():
     file = request.files.get('pdf')
@@ -116,6 +131,7 @@ def split_pdf():
     doc.close()
     return send_file(zip_path, as_attachment=True, download_name='split_pages.zip')
 
+
 @app.route('/merge-pdf', methods=['POST'])
 def merge_pdf():
     files = request.files.getlist('pdfs[]')
@@ -137,6 +153,7 @@ def merge_pdf():
     merged_doc.save(merged_pdf_path)
     merged_doc.close()
     return send_file(merged_pdf_path, as_attachment=True, download_name='merged.pdf')
+
 
 @app.route('/convert-pdf-to-text', methods=['POST'])
 def convert_pdf_to_text():
@@ -169,6 +186,7 @@ def convert_pdf_to_text():
     except Exception as e:
         return jsonify({"message": f"Error converting PDF: {str(e)}"}), 500
 
+
 @app.route('/compress-image', methods=['POST'])
 def compress_image():
     files = request.files.getlist('images[]')
@@ -192,6 +210,7 @@ def compress_image():
         for image_file in compressed_images:
             zipf.write(image_file, os.path.basename(image_file))
     return send_file(zip_path, as_attachment=True, download_name='compressed_images.zip')
+
 
 @app.route('/rearrange-pdf', methods=['POST'])
 def rearrange_pdf():
@@ -217,19 +236,11 @@ def rearrange_pdf():
     new_doc.close()
     return send_file(rearranged_pdf_path, as_attachment=True, download_name='rearranged.pdf')
 
+
+# ------------------------------
+# MAIN
+# ------------------------------
 if __name__ == '__main__':
+    # For local testing; On Render, gunicorn will call 'app:app'.
+    # But it's okay to keep the dev run here:
     app.run(debug=True)
-import os
-from flask import Flask
-
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')  # Make sure it serves the template
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
