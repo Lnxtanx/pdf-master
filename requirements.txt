@@ -1,0 +1,6 @@
+Flask
+Pillow
+PyPDF2
+pytesseract==0.3.8
+Werkzeug==2.0.1
+pdf2image

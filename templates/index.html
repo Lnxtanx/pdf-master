@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Master - All-in-One PDF Converter Tool</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" href="{{ url_for('favicon') }}">
+</head>
+<body class="light-mode">
+  <nav>
+    <div class="logo">PDF Master</div>
+    <button id="theme-toggle">🌙</button>
+  </nav>
+    
+  <main>
+    
+    <div class="features-grid">
+
+      <!-- 1) Image to PDF -->
+      <div class="feature-card">
+        <h2>🔄 Image to PDF Converter</h2>
+        <form action="/convert-image" method="post" enctype="multipart/form-data">
+          <div class="upload-area">
+            <!-- Hidden input -->
+            <input 
+              type="file" 
+              name="files[]" 
+              id="image-file-input" 
+              multiple 
+              accept="image/*" 
+              class="file-input"
+            >
+            <!-- Label triggers the file picker -->
+            <label for="image-file-input">Drag & drop images only png or click to upload</label>
+            <!-- Display chosen file names here -->
+            <p class="selected-files"></p>
+          </div>
+          <button type="submit" class="convert-btn">Convert</button>
+        </form>
+      </div>
+
+      
+      <!-- 3) PDF to Image -->
+      <div class="feature-card">
+        <h2>📸 PDF to Image Converter</h2>
+        <form action="/convert-pdf-to-image" method="post" enctype="multipart/form-data">
+          <div class="upload-area">
+            <input 
+              type="file" 
+              name="pdf"
+              id="pdf-file-input-image"
+              accept="application/pdf" 
+              class="file-input"
+            >
+            <label for="pdf-file-input-image">Upload a PDF file to convert</label>
+            <p class="selected-files"></p>
+          </div>
+          <button type="submit" class="convert-btn">Convert</button>
+        </form>
+      </div>
+
+      <!-- 4) PDF Splitter -->
+      <div class="feature-card">
+        <h2>✂️ PDF Splitter</h2>
+        <form action="/split-pdf" method="post" enctype="multipart/form-data">
+          <div class="upload-area">
+            <input 
+              type="file" 
+              name="pdf"
+              id="pdf-file-input-split"
+              accept="application/pdf" 
+              class="file-input"
+            >
+            <label for="pdf-file-input-split">Upload a PDF file to split</label>
+            <p class="selected-files"></p>
+          </div>
+          <button type="submit" class="convert-btn">Split</button>
+        </form>
+      </div>
+
+      <!-- 5) PDF Merger -->
+      <div class="feature-card">
+        <h2>➕ PDF Merger</h2>
+        <form action="/merge-pdf" method="post" enctype="multipart/form-data">
+          <div class="upload-area">
+            <input 
+              type="file" 
+              name="pdfs[]" 
+              id="pdf-file-input-merge"
+              multiple 
+              accept="application/pdf" 
+              class="file-input"
+            >
+            <label for="pdf-file-input-merge">Upload PDF files to merge</label>
+            <p class="selected-files"></p>
+          </div>
+          <button type="submit" class="convert-btn">Merge</button>
+        </form>
+      </div>
+
+      <!-- 6) PDF to Text -->
+      <div class="feature-card">
+        <h2>🔠 PDF to Text</h2>
+        <form action="/convert-pdf-to-text" method="post" enctype="multipart/form-data">
+          <div class="upload-area">
+            <input 
+              type="file" 
+              name="pdf" 
+              id="pdf-file-input-text"
+              accept="application/pdf" 
+              class="file-input"
+            >
+            <label for="pdf-file-input-text">Upload a PDF file to extract text</label>
+            <p class="selected-files"></p>
+          </div>
+          <button type="submit" class="convert-btn">Extract Text</button>
+        </form>
+      </div>
+
+      <!-- 7) Image Compressor -->
+      <div class="feature-card">
+        <h2>🖼️ Image Compressor</h2>
+        <form action="/compress-image" method="post" enctype="multipart/form-data">
+          <div class="upload-area">
+            <input 
+              type="file" 
+              name="images[]" 
+              id="images-file-input"
+              multiple 
+              accept="image/*" 
+              class="file-input"
+            >
+            <label for="images-file-input">Upload images to compress</label>
+            <p class="selected-files"></p>
+          </div>
+          <button type="submit" class="convert-btn">Compress</button>
+        </form>
+      </div>
+
+      
+      
+
+    
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

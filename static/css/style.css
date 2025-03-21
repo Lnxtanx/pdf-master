@@ -1,0 +1,179 @@
+/* ========== Root Variables ========== */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #2d72b8;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --card-bg: #f9f9f9;
+
+    --light-hover-bg: #f0f8ff;
+    --dark-hover-bg: #2c2c2c;
+}
+
+.dark-mode {
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+    --card-bg: #333333;
+}
+
+/* ========== Global Styles ========== */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2 {
+    margin: 0.5rem 0;
+    text-transform: capitalize;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: white;
+}
+
+/* ========== Main Content ========== */
+main {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* ========== Feature Cards ========== */
+.feature-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.feature-card h2 {
+    margin-bottom: 1rem;
+}
+
+/* ========== Upload Area ========== */
+.upload-area {
+    border: 2px dashed var(--primary-color);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.upload-area:hover {
+    background-color: var(--light-hover-bg);
+}
+
+/* Dark mode hover fix */
+.dark-mode .upload-area:hover {
+    background-color: var(--dark-hover-bg);
+}
+
+.upload-area.dragging {
+    background-color: #e8f0fe;
+    border-color: var(--secondary-color);
+}
+
+/* Hide the actual input */
+.file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.upload-area label {
+    display: block;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.selected-files {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+}
+
+/* ========== Buttons ========== */
+.convert-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.convert-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+/* ========== Form Elements ========== */
+form label[for="compression-level"] {
+    display: block;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+form select {
+    margin-top: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive improvements on smaller screens */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    main {
+        padding: 1rem;
+    }
+}
