@@ -42,14 +42,24 @@ def favicon():
 @app.route('/convert-image', methods=['POST'])
 def convert_image():
     files = request.files.getlist('files[]')
-    images = [Image.open(f) for f in files if allowed_file(f.filename)]
+    images = []
+    
+    for file in files:
+        if allowed_file(file.filename):
+            img = Image.open(file)
+            # Check if image has an alpha channel
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')  # remove alpha
+            images.append(img)
 
     if not images:
         return jsonify({"message": "No valid image files selected."}), 400
 
     pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], 'output.pdf')
+    # Now all images are either RGB or L (grayscale), so no RGBA error
     images[0].save(pdf_path, save_all=True, append_images=images[1:])
     return send_file(pdf_path, as_attachment=True, download_name='converted.pdf')
+
 
 
 @app.route('/compress-pdf', methods=['POST'])
