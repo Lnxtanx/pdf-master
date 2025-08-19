@@ -5,24 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PDF Master - All-in-One PDF Converter Tool</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="icon" href="{{ url_for('favicon') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="light-mode">
-  <nav>
-    <div class="logo">PDF Master</div>
-    <button id="theme-toggle">🌙</button>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-file-pdf"></i>
+        PDF Master
+      </div>
+      <button id="theme-toggle" class="theme-btn">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
   </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">PDF Master</h1>
+      <p class="hero-subtitle">All-in-One PDF Converter & Processing Tool</p>
+      <p class="hero-description">Convert, split, merge, and compress your documents with ease. Fast, secure, and completely free.</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <h2 class="section-title">About PDF Master</h2>
+        <p class="about-text">
+          PDF Master is a comprehensive web-based tool designed to handle all your PDF processing needs. 
+          Built with modern web technologies, this application provides a seamless experience for converting, 
+          manipulating, and optimizing documents. Whether you need to convert images to PDF, extract text from documents, 
+          or compress images, PDF Master has you covered.
+        </p>
+        <div class="features-highlight">
+          <div class="highlight-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Secure Processing</span>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-bolt"></i>
+            <span>Lightning Fast</span>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Mobile Friendly</span>
+          </div>
+          <div class="highlight-item">
+            <i class="fas fa-cloud"></i>
+            <span>No Registration</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
     
-  <main>
+  <main class="main-content">
+    <div class="container">
+      <h2 class="tools-title">Choose Your Tool</h2>
     
     <div class="features-grid">
 
       <!-- 1) Image to PDF -->
       <div class="feature-card">
-        <h2>🔄 Image to PDF Converter</h2>
+        <div class="card-header">
+          <i class="fas fa-images"></i>
+          <h3>Image to PDF Converter</h3>
+        </div>
+        <p class="card-description">Convert multiple images (PNG, JPG, WEBP) into a single PDF document</p>
         <form action="/convert-image" method="post" enctype="multipart/form-data">
           <div class="upload-area">
-            <!-- Hidden input -->
             <input 
               type="file" 
               name="files[]" 
@@ -31,19 +87,26 @@
               accept="image/*" 
               class="file-input"
             >
-            <!-- Label triggers the file picker -->
-            <label for="image-file-input">Drag & drop images only png or click to upload</label>
-            <!-- Display chosen file names here -->
+            <label for="image-file-input" class="upload-label">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span>Drag & drop images or click to upload</span>
+            </label>
             <p class="selected-files"></p>
           </div>
-          <button type="submit" class="convert-btn">Convert</button>
+          <button type="submit" class="convert-btn">
+            <i class="fas fa-magic"></i>
+            Convert to PDF
+          </button>
         </form>
       </div>
 
-      
-      <!-- 3) PDF to Image -->
+      <!-- 2) PDF to Image -->
       <div class="feature-card">
-        <h2>📸 PDF to Image Converter</h2>
+        <div class="card-header">
+          <i class="fas fa-file-image"></i>
+          <h3>PDF to Image Converter</h3>
+        </div>
+        <p class="card-description">Extract pages from PDF and convert them to high-quality images</p>
         <form action="/convert-pdf-to-image" method="post" enctype="multipart/form-data">
           <div class="upload-area">
             <input 
@@ -53,16 +116,26 @@
               accept="application/pdf" 
               class="file-input"
             >
-            <label for="pdf-file-input-image">Upload a PDF file to convert</label>
+            <label for="pdf-file-input-image" class="upload-label">
+              <i class="fas fa-file-pdf"></i>
+              <span>Upload a PDF file to convert</span>
+            </label>
             <p class="selected-files"></p>
           </div>
-          <button type="submit" class="convert-btn">Convert</button>
+          <button type="submit" class="convert-btn">
+            <i class="fas fa-image"></i>
+            Convert to Images
+          </button>
         </form>
       </div>
 
-      <!-- 4) PDF Splitter -->
+      <!-- 3) PDF Splitter -->
       <div class="feature-card">
-        <h2>✂️ PDF Splitter</h2>
+        <div class="card-header">
+          <i class="fas fa-cut"></i>
+          <h3>PDF Splitter</h3>
+        </div>
+        <p class="card-description">Split your PDF into individual pages or specific page ranges</p>
         <form action="/split-pdf" method="post" enctype="multipart/form-data">
           <div class="upload-area">
             <input 
@@ -72,16 +145,26 @@
               accept="application/pdf" 
               class="file-input"
             >
-            <label for="pdf-file-input-split">Upload a PDF file to split</label>
+            <label for="pdf-file-input-split" class="upload-label">
+              <i class="fas fa-file-pdf"></i>
+              <span>Upload a PDF file to split</span>
+            </label>
             <p class="selected-files"></p>
           </div>
-          <button type="submit" class="convert-btn">Split</button>
+          <button type="submit" class="convert-btn">
+            <i class="fas fa-scissors"></i>
+            Split PDF
+          </button>
         </form>
       </div>
 
-      <!-- 5) PDF Merger -->
+      <!-- 4) PDF Merger -->
       <div class="feature-card">
-        <h2>➕ PDF Merger</h2>
+        <div class="card-header">
+          <i class="fas fa-compress-arrows-alt"></i>
+          <h3>PDF Merger</h3>
+        </div>
+        <p class="card-description">Combine multiple PDF files into a single document</p>
         <form action="/merge-pdf" method="post" enctype="multipart/form-data">
           <div class="upload-area">
             <input 
@@ -92,16 +175,26 @@
               accept="application/pdf" 
               class="file-input"
             >
-            <label for="pdf-file-input-merge">Upload PDF files to merge</label>
+            <label for="pdf-file-input-merge" class="upload-label">
+              <i class="fas fa-files-o"></i>
+              <span>Upload PDF files to merge</span>
+            </label>
             <p class="selected-files"></p>
           </div>
-          <button type="submit" class="convert-btn">Merge</button>
+          <button type="submit" class="convert-btn">
+            <i class="fas fa-compress"></i>
+            Merge PDFs
+          </button>
         </form>
       </div>
 
-      <!-- 6) PDF to Text -->
+      <!-- 5) PDF to Text -->
       <div class="feature-card">
-        <h2>🔠 PDF to Text</h2>
+        <div class="card-header">
+          <i class="fas fa-file-alt"></i>
+          <h3>PDF to Text</h3>
+        </div>
+        <p class="card-description">Extract text content from PDF documents for editing or analysis</p>
         <form action="/convert-pdf-to-text" method="post" enctype="multipart/form-data">
           <div class="upload-area">
             <input 
@@ -111,16 +204,26 @@
               accept="application/pdf" 
               class="file-input"
             >
-            <label for="pdf-file-input-text">Upload a PDF file to extract text</label>
+            <label for="pdf-file-input-text" class="upload-label">
+              <i class="fas fa-file-pdf"></i>
+              <span>Upload a PDF file to extract text</span>
+            </label>
             <p class="selected-files"></p>
           </div>
-          <button type="submit" class="convert-btn">Extract Text</button>
+          <button type="submit" class="convert-btn">
+            <i class="fas fa-text-width"></i>
+            Extract Text
+          </button>
         </form>
       </div>
 
-      <!-- 7) Image Compressor -->
+      <!-- 6) Image Compressor -->
       <div class="feature-card">
-        <h2>🖼️ Image Compressor</h2>
+        <div class="card-header">
+          <i class="fas fa-compress-alt"></i>
+          <h3>Image Compressor</h3>
+        </div>
+        <p class="card-description">Reduce image file sizes while maintaining quality</p>
         <form action="/compress-image" method="post" enctype="multipart/form-data">
           <div class="upload-area">
             <input 
@@ -131,18 +234,67 @@
               accept="image/*" 
               class="file-input"
             >
-            <label for="images-file-input">Upload images to compress</label>
+            <label for="images-file-input" class="upload-label">
+              <i class="fas fa-images"></i>
+              <span>Upload images to compress</span>
+            </label>
             <p class="selected-files"></p>
           </div>
-          <button type="submit" class="convert-btn">Compress</button>
+          <button type="submit" class="convert-btn">
+            <i class="fas fa-compress"></i>
+            Compress Images
+          </button>
         </form>
       </div>
-
-      
-      
-
-    
+    </div>
   </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <i class="fas fa-file-pdf"></i>
+            PDF Master
+          </div>
+          <p class="footer-description">
+            Your trusted companion for all PDF processing needs. Fast, secure, and reliable.
+          </p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Features</h4>
+          <ul class="footer-links">
+            <li><a href="#convert">PDF Conversion</a></li>
+            <li><a href="#split">PDF Splitting</a></li>
+            <li><a href="#merge">PDF Merging</a></li>
+            <li><a href="#compress">Image Compression</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>About</h4>
+          <ul class="footer-links">
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#help">Help</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="footer-credit">
+          <p>&copy; 2024 PDF Master. Built with ❤️ by <strong>Vivek Kumar</strong></p>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/Lnxtanx" target="_blank" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/in/vivek-kumar1387" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
